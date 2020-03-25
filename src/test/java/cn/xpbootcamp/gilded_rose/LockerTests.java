@@ -2,8 +2,7 @@ package cn.xpbootcamp.gilded_rose;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class LockerTests {
 
@@ -18,5 +17,20 @@ public class LockerTests {
         // then
         assertNotNull(ticket);
         assertEquals(19, locker.getCapacity());
+    }
+
+    @Test
+    void should_get_full_ticket_when_save_given_there_is_no_place_in_locker() {
+        // given
+        Locker locker = new Locker(1);
+        locker.save();
+
+        // when
+        Ticket ticket = locker.save();
+
+        // then
+        assertNotNull(ticket);
+        assertNull(ticket.getId());
+        assertEquals("There is no place to save.", ticket.getMessage());
     }
 }

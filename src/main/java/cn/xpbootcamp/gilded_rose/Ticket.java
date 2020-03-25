@@ -10,4 +10,8 @@ public class Ticket {
     public String getId() {
         return id;
     }
+
+    public String getMessage() {
+        return null;
+    }
 }
