@@ -33,4 +33,19 @@ public class LockerTests {
         assertNull(ticket.getId());
         assertEquals("There is no place to save.", ticket.getMessage());
     }
+
+
+    @Test
+    void should_ticker_not_work_and_capacity_plus_one_when_fetch_given_a_effective_ticket() {
+        // given
+        Locker locker = new Locker(20);
+        Ticket ticket = locker.save();
+
+        // when
+        boolean status =  locker.fetch(ticket);
+
+        // then
+        assertTrue(locker.getEffectiveTickets().contains(ticket));
+        assertEquals(20, locker.getCapacity());
+    }
 }

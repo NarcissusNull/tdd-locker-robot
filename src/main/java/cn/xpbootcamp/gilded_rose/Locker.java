@@ -1,5 +1,7 @@
 package cn.xpbootcamp.gilded_rose;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class Locker {
@@ -22,5 +24,13 @@ public class Locker {
 
     public int getCapacity() {
         return capacity;
+    }
+
+    public List<Ticket> getEffectiveTickets() {
+        return new ArrayList<Ticket>();
+    }
+
+    public boolean fetch(Ticket ticket) {
+        return false;
     }
 }
