@@ -39,6 +39,7 @@ public class Locker {
             effectiveTickets.remove(ticket);
             return true;
         } else {
+            System.out.print("ticket not work");
             return false;
         }
     }
