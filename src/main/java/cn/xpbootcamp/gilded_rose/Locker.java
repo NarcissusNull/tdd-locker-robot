@@ -1,5 +1,7 @@
 package cn.xpbootcamp.gilded_rose;
 
+import java.util.UUID;
+
 public class Locker {
     private int capacity;
 
@@ -8,10 +10,13 @@ public class Locker {
     }
 
     public Ticket save() {
-        return null;
+        this.capacity--;
+        String id = UUID.randomUUID().toString();
+
+        return new Ticket(id);
     }
 
     public int getCapacity() {
-        return 0;
+        return capacity;
     }
 }
