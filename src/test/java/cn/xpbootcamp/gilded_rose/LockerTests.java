@@ -45,7 +45,7 @@ public class LockerTests {
         boolean status =  locker.fetch(ticket);
 
         // then
-        assertTrue(locker.getEffectiveTickets().contains(ticket));
+        assertFalse(locker.getEffectiveTickets().contains(ticket));
         assertEquals(20, locker.getCapacity());
     }
 }
