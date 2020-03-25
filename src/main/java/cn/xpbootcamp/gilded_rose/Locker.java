@@ -10,10 +10,14 @@ public class Locker {
     }
 
     public Ticket save() {
+        if (this.capacity == 0) {
+            return new Ticket(null, "There is no place to save.");
+        }
+
         this.capacity--;
         String id = UUID.randomUUID().toString();
 
-        return new Ticket(id);
+        return new Ticket(id, "Save success");
     }
 
     public int getCapacity() {
