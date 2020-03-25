@@ -16,6 +16,7 @@ public class Locker {
         if (this.capacity == 0) {
             return new Ticket(null, "There is no place to save.");
         }
+
         this.capacity--;
         String id = UUID.randomUUID().toString();
 
