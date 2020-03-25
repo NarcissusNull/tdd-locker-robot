@@ -6,6 +6,7 @@ import java.util.UUID;
 
 public class Locker {
     private int capacity;
+    private List<Ticket> effectiveTickets = new ArrayList<>();
 
     public Locker(int capacity) {
         this.capacity = capacity;
@@ -15,11 +16,12 @@ public class Locker {
         if (this.capacity == 0) {
             return new Ticket(null, "There is no place to save.");
         }
-
         this.capacity--;
         String id = UUID.randomUUID().toString();
 
-        return new Ticket(id, "Save success");
+        Ticket ticket = new Ticket(id, "Save success");
+        effectiveTickets.add(ticket);
+        return ticket;
     }
 
     public int getCapacity() {
@@ -27,10 +29,16 @@ public class Locker {
     }
 
     public List<Ticket> getEffectiveTickets() {
-        return new ArrayList<Ticket>();
+        return this.effectiveTickets;
     }
 
     public boolean fetch(Ticket ticket) {
-        return false;
+        if (effectiveTickets.contains(ticket)) {
+            this.capacity++;
+            effectiveTickets.remove(ticket);
+            return true;
+        } else {
+            return false;
+        }
     }
 }
