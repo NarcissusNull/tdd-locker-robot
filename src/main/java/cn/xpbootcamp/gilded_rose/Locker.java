@@ -1,46 +1,34 @@
 package cn.xpbootcamp.gilded_rose;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class Locker {
     private int capacity;
-    private List<Ticket> effectiveTickets = new ArrayList<>();
+    private Map<Ticket, Bag> usedCapacity = new HashMap<>();
 
     public Locker(int capacity) {
         this.capacity = capacity;
     }
 
-    public Ticket save() {
-        if (this.capacity == 0) {
-            return new Ticket(null, "There is no place to save.");
+    public Ticket save(Bag bag) {
+        if (this.usedCapacity.size() >= this.capacity) {
+            throw new RuntimeException("locker is empty");
         }
 
-        this.capacity--;
         String id = UUID.randomUUID().toString();
+        Ticket ticket = new Ticket(id);
+        usedCapacity.put(ticket, bag);
 
-        Ticket ticket = new Ticket(id, "Save success");
-        effectiveTickets.add(ticket);
         return ticket;
     }
 
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public List<Ticket> getEffectiveTickets() {
-        return this.effectiveTickets;
-    }
-
-    public boolean fetch(Ticket ticket) {
-        if (effectiveTickets.contains(ticket)) {
-            this.capacity++;
-            effectiveTickets.remove(ticket);
-            return true;
-        } else {
-            System.out.print("ticket not work");
-            return false;
+    public Bag fetch(Ticket ticket) {
+        if (!usedCapacity.containsKey(ticket)) {
+            throw new RuntimeException("ticket not work");
         }
+
+        Bag bag = usedCapacity.get(ticket);
+        usedCapacity.remove(ticket);
+        return bag;
     }
 }

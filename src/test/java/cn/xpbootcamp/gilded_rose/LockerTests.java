@@ -13,28 +13,27 @@ public class LockerTests {
     void should_get_ticket_and_decrease_capacity_when_save_given_there_is_place_in_locker() {
         // given
         Locker locker = new Locker(20);
+        Bag bag = new Bag();
 
         // when
-        Ticket ticket = locker.save();
+        Ticket ticket = locker.save(bag);
 
         // then
         assertNotNull(ticket);
-        assertEquals(19, locker.getCapacity());
     }
 
     @Test
     void should_get_full_ticket_when_save_given_there_is_no_place_in_locker() {
         // given
         Locker locker = new Locker(1);
-        locker.save();
+        Bag bag = new Bag();
+        locker.save(bag);
 
         // when
-        Ticket ticket = locker.save();
-
+        RuntimeException runtimeException = assertThrows(RuntimeException.class,
+                () -> locker.save(bag));
         // then
-        assertNotNull(ticket);
-        assertNull(ticket.getId());
-        assertEquals("There is no place to save.", ticket.getMessage());
+        assertEquals("locker is empty", runtimeException.getMessage());
     }
 
 
@@ -42,30 +41,31 @@ public class LockerTests {
     void should_ticker_not_work_and_capacity_plus_one_when_fetch_given_a_effective_ticket() {
         // given
         Locker locker = new Locker(20);
-        Ticket ticket = locker.save();
+        Bag bag = new Bag();
+        Ticket ticket = locker.save(bag);
 
         // when
-        boolean status = locker.fetch(ticket);
+        Bag fetchedBag = locker.fetch(ticket);
 
         // then
-        assertTrue(status);
-        assertFalse(locker.getEffectiveTickets().contains(ticket));
-        assertEquals(20, locker.getCapacity());
+        assertEquals(bag, fetchedBag);
     }
 
     @Test
     void should_prompt_ticker_not_work_when_fetch_given_a_not_work_ticket() {
         // given
         Locker locker = new Locker(20);
-        Ticket ticket = locker.save();
+        Bag bag = new Bag();
+        Ticket ticket = locker.save(bag);
         locker.fetch(ticket);
-        final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
 
         // when
-        boolean status = locker.fetch(ticket);
+        RuntimeException runtimeException = assertThrows(RuntimeException.class,
+                () -> locker.fetch(ticket));
+
+
         // then
-        assertFalse(status);
-        assertEquals("ticket not work", outContent.toString());
+        assertEquals("ticket not work", runtimeException.getMessage());
+
     }
 }
