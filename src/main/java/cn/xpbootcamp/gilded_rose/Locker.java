@@ -10,6 +10,10 @@ public class Locker {
         this.capacity = capacity;
     }
 
+    public boolean isFull() {
+        return capacity == usedCapacity.size();
+    }
+
     public Ticket save(Bag bag) {
         if (this.usedCapacity.size() >= this.capacity) {
             throw new RuntimeException("locker is empty");
