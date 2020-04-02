@@ -11,6 +11,10 @@ public class PrimaryLockerRobot {
     }
 
     public Ticket save(Bag bag) {
-        return lockers.stream().filter(e -> !e.isFull()).findFirst().map(locker -> locker.save(bag)).orElse(null);
+        Ticket ticket = lockers.stream().filter(e -> !e.isFull()).findFirst().map(locker -> locker.save(bag)).orElse(null);
+        if (ticket == null) {
+            throw new RuntimeException("All lockers are full");
+        }
+        return ticket;
     }
 }
