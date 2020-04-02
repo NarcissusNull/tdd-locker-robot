@@ -26,8 +26,12 @@ public class Locker {
         return ticket;
     }
 
+    public boolean isActiveTicket(Ticket ticket) {
+        return usedCapacity.containsKey(ticket);
+    }
+
     public Bag fetch(Ticket ticket) {
-        if (!usedCapacity.containsKey(ticket)) {
+        if (!isActiveTicket(ticket)) {
             throw new RuntimeException("ticket not work");
         }
 
