@@ -21,6 +21,9 @@ public class SmartLockerRobot {
 
     public Bag fetch(Ticket ticket) {
         Bag bag = lockers.stream().filter(e -> e.isActiveTicket(ticket)).findFirst().map(locker -> locker.fetch(ticket)).orElse(null);
+        if (bag == null) {
+            throw new RuntimeException("ticket not work");
+        }
         return bag;
     }
 }
