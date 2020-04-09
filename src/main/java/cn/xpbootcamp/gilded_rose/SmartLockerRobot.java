@@ -12,7 +12,10 @@ public class SmartLockerRobot {
 
 
     public Ticket save(Bag bag) {
-        Ticket ticket = lockers.stream().max(Comparator.comparing( Locker::getAvailableCapacity )).map(locker -> locker.save(bag)).orElse(null);
+        Ticket ticket = lockers.stream().filter(e -> !e.isFull()).max(Comparator.comparing( Locker::getAvailableCapacity )).map(locker -> locker.save(bag)).orElse(null);
+        if (ticket == null) {
+            throw new RuntimeException("All lockers are full");
+        }
         return ticket;
     }
 }

@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SmartLockerRobotTests {
     @Test
@@ -27,5 +26,24 @@ public class SmartLockerRobotTests {
         assertNotNull(ticket);
         assertEquals(bag, locker2.fetch(ticket));
     }
+
+    @Test
+    void should_get_full_exception_when_save_given_there_is_no_place_in_robot() {
+        // given
+        List<Locker> lockers = new ArrayList<Locker>();
+        Locker locker1 = new Locker(0);
+        Locker locker2 = new Locker(0);
+        lockers.add(locker1);
+        lockers.add(locker2);
+        SmartLockerRobot smartLockerRobot = new SmartLockerRobot(lockers);
+        Bag bag = new Bag();
+
+        // when
+        RuntimeException runtimeException = assertThrows(RuntimeException.class,
+                () -> smartLockerRobot.save(bag));
+        // then
+        assertEquals("All lockers are full", runtimeException.getMessage());
+    }
+
 
 }
