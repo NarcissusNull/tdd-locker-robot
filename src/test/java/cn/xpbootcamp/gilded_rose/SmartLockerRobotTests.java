@@ -45,5 +45,23 @@ public class SmartLockerRobotTests {
         assertEquals("All lockers are full", runtimeException.getMessage());
     }
 
+    @Test
+    void should_get_bag_when_fetch_given_a_effective_ticket() {
+        // given
+        List<Locker> lockers = new ArrayList<Locker>();
+        Locker locker1 = new Locker(1);
+        Locker locker2 = new Locker(2);
+        lockers.add(locker1);
+        lockers.add(locker2);
+        SmartLockerRobot smartLockerRobot= new SmartLockerRobot(lockers);
+        Bag bag = new Bag();
+        Ticket ticket = smartLockerRobot.save(bag);
+
+        // when
+        Bag fetchedBag = smartLockerRobot.fetch(ticket);
+
+        // then
+        assertEquals(bag, fetchedBag);
+    }
 
 }
