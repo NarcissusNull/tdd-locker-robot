@@ -12,6 +12,9 @@ public class SuperLockerRobot {
 
     public Ticket save(Bag bag) {
         Ticket ticket = lockers.stream().filter(e -> !e.isFull()).max(Comparator.comparing( Locker::getvacancyRate )).map(locker -> locker.save(bag)).orElse(null);
+        if (ticket == null) {
+            throw new RuntimeException("All lockers are full");
+        }
         return ticket;
     }
 }
