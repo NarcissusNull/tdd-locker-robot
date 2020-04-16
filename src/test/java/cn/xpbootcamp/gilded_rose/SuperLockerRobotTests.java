@@ -68,4 +68,27 @@ public class SuperLockerRobotTests {
         assertEquals(bag, fetchedBag);
     }
 
+    @Test
+    void should_get_ticket_not_work_exception_when_fetch_given_not_work_ticket() {
+        // given
+        List<Locker> lockers = new ArrayList<Locker>();
+        Locker locker1 = new Locker(1);
+        Locker locker2 = new Locker(0);
+        lockers.add(locker1);
+        lockers.add(locker2);
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(lockers);
+        Bag bag = new Bag();
+        Ticket ticket = superLockerRobot.save(bag);
+        superLockerRobot.fetch(ticket);
+
+        // when
+        RuntimeException runtimeException = assertThrows(RuntimeException.class,
+                () -> superLockerRobot.fetch(ticket));
+
+
+        // then
+        assertEquals("ticket not work", runtimeException.getMessage());
+
+    }
+
 }
