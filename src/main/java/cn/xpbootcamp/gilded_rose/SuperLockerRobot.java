@@ -17,4 +17,9 @@ public class SuperLockerRobot {
         }
         return ticket;
     }
+
+    public Bag fetch(Ticket ticket) {
+        Bag bag = lockers.stream().filter(e -> e.isActiveTicket(ticket)).findFirst().map(locker -> locker.fetch(ticket)).orElse(null);
+        return bag;
+    }
 }
