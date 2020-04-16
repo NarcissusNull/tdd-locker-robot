@@ -1,6 +1,8 @@
 package cn.xpbootcamp.gilded_rose;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class Locker {
     private int capacity;
@@ -42,5 +44,9 @@ public class Locker {
 
     public int getAvailableCapacity() {
         return capacity - usedCapacity.size();
+    }
+
+    public double getvacancyRate() {
+        return 1 - this.usedCapacity.size() / (double) this.capacity;
     }
 }
